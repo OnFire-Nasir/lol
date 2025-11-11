@@ -21,20 +21,6 @@ jobs:
               bc bison build-essential ccache curl flex g++-multilib gcc-multilib \
               git gnupg gperf libncurses5-dev libssl-dev libtool pkg-config \
               python3 python3-pip rsync unzip wget zip zlib1g-dev aria2
-          git clone https://gitlab.com/OrangeFox/misc/scripts.git -b master
-          cd scripts
-          sudo bash setup/android_build_env.sh
-
-      - name: Set-up Manifest
-        if: ${{ inputs.MANIFEST_BRANCH == '11.0' || inputs.MANIFEST_BRANCH == '12.1' }}
-        run: |
-          mkdir -p "${GITHUB_WORKSPACE}/OrangeFox"
-          cd "${GITHUB_WORKSPACE}/OrangeFox"
-          git config --global user.name "${{ github.actor }}"
-          git config --global user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
-          git clone https://gitlab.com/OrangeFox/sync.git -b master
-          cd sync
-          ./orangefox_sync.sh --branch "${{ inputs.MANIFEST_BRANCH }}" --path "${GITHUB_WORKSPACE}/OrangeFox/fox_${{ inputs.MANIFEST_BRANCH }}"
 
       - name: 📁 Create dirs
         run: mkdir -p links .backup
